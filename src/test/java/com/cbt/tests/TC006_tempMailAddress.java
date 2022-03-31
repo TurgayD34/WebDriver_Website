@@ -4,6 +4,7 @@ import com.cbt.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -45,6 +46,14 @@ public class TC006_tempMailAddress {
         System.out.println("getEmail = " + getEmail);
 
         //Go to Cybertek
-        
+        driver.navigate().to("http://practice.cybertekschool.com/");
+        driver.findElement(By.xpath("//a[contains(text(),'Sign Up')]")).click();
+        driver.findElement(By.xpath("//input[@name='full_name']")).sendKeys("Tdemir");
+        driver.findElement(By.xpath("//input[@name='email']")).sendKeys(getEmail);
+        driver.findElement(By.xpath("//button[@name='wooden_spoon']")).click();
+        WebElement expectedMessage = driver.findElement(By.xpath("//h3[@name='signup_message']"));
+        String expected = expectedMessage.getText();
+        String actual = "Thank you for signing up. Click the button below to return to the home page.";
+        Assert.assertEquals(actual, expected);
     }
 }
